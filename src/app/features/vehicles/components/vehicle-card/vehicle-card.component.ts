@@ -9,6 +9,7 @@ import { AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VehicleCardComponent {
+  // TODO refactor to use signals input
   @Input({ required: true }) vehicle!: AnyVehicle;
 
   /**
