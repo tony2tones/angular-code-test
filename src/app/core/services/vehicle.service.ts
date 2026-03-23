@@ -6,6 +6,7 @@ import {
   catchError,
   forkJoin,
   map,
+  of,
   switchMap,
 } from 'rxjs';
 import {
@@ -21,6 +22,7 @@ const API_BASE =
 export class VehicleService {
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
+  readonly vehicles = signal<AnyVehicle[]>([]);
 
   constructor(private readonly http: HttpClient) {}
 
@@ -41,14 +43,15 @@ export class VehicleService {
               .get<VehicleDetail>(`${API_BASE}${summary.apiUrl}`)
               .pipe(
                 map((detail) => this.merge(summary, detail)),
-                // Per-vehicle errors are swallowed so one bad record
-                // (e.g. "problematic") doesn't kill the entire list.
-                catchError(() => EMPTY),
+                // Per-vehicle errors emit null so forkJoin still completes.
+                catchError(() => of(null)),
               ),
           ),
         ),
       ),
-      map((vehicles) => {
+      map((results) => {
+        const vehicles = results.filter((v): v is AnyVehicle => v !== null);
+        this.vehicles.set(vehicles);
         this.loading.set(false);
         return vehicles;
       }),
