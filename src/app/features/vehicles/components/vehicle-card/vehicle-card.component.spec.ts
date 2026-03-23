@@ -43,8 +43,8 @@ describe('VehicleCardComponent', () => {
     fixture = TestBed.createComponent(VehicleCardComponent);
     component = fixture.componentInstance;
 
-    // Set the required @Input before the first change detection cycle.
-    component.vehicle = mockVehicle;
+    // Signal inputs must be set via setInput() rather than direct assignment.
+    fixture.componentRef.setInput('vehicle', mockVehicle);
     fixture.detectChanges();
   });
 
@@ -62,15 +62,15 @@ describe('VehicleCardComponent', () => {
     });
 
     it('falls back to the first media item when no 16x9 url exists', () => {
-      component.vehicle = {
+      fixture.componentRef.setInput('vehicle', {
         ...mockVehicle,
         media: [{ name: 'xe 4x3', url: '/images/4x3/xe.jpg' }],
-      };
+      });
       expect(component.imageUrl).toBe('/images/4x3/xe.jpg');
     });
 
     it('returns an empty string when the media array is empty', () => {
-      component.vehicle = { ...mockVehicle, media: [] };
+      fixture.componentRef.setInput('vehicle', { ...mockVehicle, media: [] });
       expect(component.imageUrl).toBe('');
     });
   });
