@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
 
 @Component({
@@ -9,29 +9,25 @@ import { AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VehicleCardComponent {
-  // TODO refactor to use signals input
-  @Input({ required: true }) vehicle!: AnyVehicle;
+  vehicle = input.required<AnyVehicle>();
 
   /**
    * Used by the parent list to stagger the fade-in animation via
    * [style.animation-delay] bound on the host element.
    */
-  @Input() index = 0;
+  index = input(0);
 
   /**
    * Prefer the 16x9 image; CSS aspect-ratio + object-fit handles the
    * visual crop at all breakpoints so we never need to swap src.
    */
   get imageUrl(): string {
-    return (
-      this.vehicle.media.find((m) => m.url.includes('16x9'))?.url ??
-      this.vehicle.media[0]?.url ??
-      ''
-    );
+    const { media } = this.vehicle();
+    return media.find((m) => m.url.includes('16x9'))?.url ?? media[0]?.url ?? '';
   }
 
   get emissionsLabel(): string {
-    const { template, value } = this.vehicle.meta.emissions;
+    const { template, value } = this.vehicle().meta.emissions;
     return template.replace('$value', String(value));
   }
 }
