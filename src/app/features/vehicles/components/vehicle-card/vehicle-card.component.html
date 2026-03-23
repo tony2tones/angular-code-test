@@ -1,0 +1,16 @@
+<article class="vehicle-card">
+  <div class="vehicle-card__image-wrapper">
+    <img
+      class="vehicle-card__image"
+      [src]="imageUrl"
+      [alt]="vehicle.name"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="vehicle-card__body">
+    <h2 class="vehicle-card__name">{{ vehicle.name }}</h2>
+    <p class="vehicle-card__price">From {{ vehicle.price }}</p>
+    <p class="vehicle-card__description">{{ vehicle.description }}</p>
+  </div>
+</article>
