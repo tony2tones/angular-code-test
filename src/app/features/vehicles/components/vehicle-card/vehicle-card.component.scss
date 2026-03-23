@@ -1,0 +1,101 @@
+// Animation runs on the host element so that the parent can control
+// animation-delay via [style.animation-delay] without ViewEncapsulation issues.
+:host {
+  display: block;
+  opacity: 0;
+  animation: vehicle-card-fade-in 0.5s ease forwards;
+}
+
+@keyframes vehicle-card-fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+.vehicle-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #fff;
+
+  // ── Tablet and above: flip to vertical stacked layout ──
+  @media (min-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    border-bottom: none;
+  }
+
+  // ─────────────────────────────────────────────
+  // Image wrapper
+  // The same <img> src is used at every breakpoint.
+  // Changing aspect-ratio + object-fit: cover gives the
+  // illusion of a different crop without swapping src.
+  // ─────────────────────────────────────────────
+  &__image-wrapper {
+    flex-shrink: 0;
+    width: 38%;
+    aspect-ratio: 1 / 1; // mobile: square crop
+    overflow: hidden;
+
+    @media (min-width: 768px) {
+      width: 100%;
+      aspect-ratio: 16 / 9; // tablet+: widescreen crop
+    }
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // ─────────────────────────────────────────────
+  // Text body
+  // ─────────────────────────────────────────────
+  &__body {
+    flex: 1;
+    padding: 0 16px;
+
+    @media (min-width: 768px) {
+      padding: 20px 16px 28px;
+      text-align: center;
+    }
+  }
+
+  &__name {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 6px;
+
+    @media (min-width: 768px) {
+      font-size: 1.0625rem;
+      text-decoration: underline;
+      text-underline-offset: 5px;
+      margin-bottom: 14px;
+    }
+  }
+
+  &__price {
+    font-size: 0.875rem;
+    color: #333;
+    margin: 0 0 6px;
+
+    @media (min-width: 768px) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__description {
+    font-size: 0.875rem;
+    color: #555;
+    line-height: 1.45;
+    margin: 0;
+  }
+}

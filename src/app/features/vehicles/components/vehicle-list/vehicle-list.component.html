@@ -1,0 +1,43 @@
+<section class="vehicle-list" aria-label="Vehicles">
+
+  @if (vehicleService.loading()) {
+
+    <!-- Skeleton grid mirrors the real grid layout so there's no layout shift on load -->
+    <ul class="vehicle-list__grid" aria-label="Loading vehicles" aria-busy="true">
+      @for (_ of skeletonCount; track $index) {
+        <li class="vehicle-list__item">
+          <div class="vehicle-list__skeleton" aria-hidden="true">
+            <div class="vehicle-list__skeleton-image"></div>
+            <div class="vehicle-list__skeleton-body">
+              <div class="vehicle-list__skeleton-line vehicle-list__skeleton-line--title"></div>
+              <div class="vehicle-list__skeleton-line"></div>
+              <div class="vehicle-list__skeleton-line vehicle-list__skeleton-line--short"></div>
+            </div>
+          </div>
+        </li>
+      }
+    </ul>
+
+  } @else if (vehicleService.error()) {
+
+    <div class="vehicle-list__error" role="alert">
+      <p class="vehicle-list__error-message">{{ vehicleService.error() }}</p>
+    </div>
+
+  } @else {
+
+    <ul class="vehicle-list__grid" aria-label="Vehicle list">
+      @for (vehicle of vehicleService.vehicles(); track vehicle.id; let i = $index) {
+        <li class="vehicle-list__item">
+          <app-vehicle-card
+            [vehicle]="vehicle"
+            [index]="i"
+            [style.animation-delay]="i * 0.1 + 's'"
+          />
+        </li>
+      }
+    </ul>
+
+  }
+
+</section>
