@@ -1,7 +1,9 @@
 // Animation runs on the host element so that the parent can control
 // animation-delay via [style.animation-delay] without ViewEncapsulation issues.
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   opacity: 0;
   animation: vehicle-card-fade-in 0.5s ease forwards;
 }
@@ -19,6 +21,7 @@
   padding: 16px;
   border-bottom: 1px solid #e0e0e0;
   background-color: #fff;
+  flex: 1;
 
   // ── Tablet and above: flip to vertical stacked layout ──
   @media (min-width: 768px) {
@@ -67,6 +70,10 @@
   }
 
   &__name {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    width: fit-content;
+    padding-block: 4px;
     font-family: Georgia, 'Times New Roman', serif;
     font-size: 1rem;
     font-weight: 700;
@@ -76,9 +83,8 @@
 
     @media (min-width: 768px) {
       font-size: 1.0625rem;
-      text-decoration: underline;
-      text-underline-offset: 5px;
       margin-bottom: 14px;
+      margin-inline: auto;
     }
   }
 
@@ -97,5 +103,15 @@
     color: #555;
     line-height: 1.45;
     margin: 0;
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding: 12px 16px;
+    text-align: center;
+
+    @media (min-width: 768px) {
+      padding: 16px;
+    }
   }
 }
