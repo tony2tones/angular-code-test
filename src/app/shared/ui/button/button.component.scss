@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .btn {
   display: block;
   width: 100%;
@@ -15,13 +19,13 @@
   }
 
   &--primary {
-    background-color: #1a1a1a;
-    color: #fff;
+    background-color: var(--primary-colour);
+    color: var(--colour-text-on-primary);
   }
 
   &--secondary {
-    background-color: #fff;
-    color: #1a1a1a;
-    border: 1px solid #1a1a1a;
+    background-color: var(--secondary-colour);
+    color: var(--primary-colour);
+    border: 1px solid var(--primary-colour);
   }
 }

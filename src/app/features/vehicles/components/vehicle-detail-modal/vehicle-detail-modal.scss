@@ -3,10 +3,10 @@
   border-radius: 4px;
   padding: 0;
   width: min(560px, 90vw);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 32px var(--colour-shadow);
 
   &::backdrop {
-    background: rgba(0, 0, 0, 0.55);
+    background: var(--colour-backdrop);
     backdrop-filter: blur(2px);
   }
 
@@ -24,19 +24,18 @@
     font-size: 1.5rem;
     line-height: 1;
     cursor: pointer;
-    color: #555;
+    color: var(--colour-text-muted);
     padding: 4px 8px;
     border-radius: 4px;
     transition: background 0.15s ease, color 0.15s ease;
 
     &:hover {
-      background: #f0f0f0;
-      color: #1a1a1a;
+      background: var(--colour-surface-hover);
+      color: var(--primary-colour);
     }
   }
 
   &__title {
-    font-family: Georgia, 'Times New Roman', serif;
     font-size: 1.25rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -55,9 +54,9 @@
 
     li {
       font-size: 0.9rem;
-      color: #333;
+      color: var(--colour-text);
       padding: 10px 12px;
-      background: #f7f7f7;
+      background: var(--colour-surface);
       border-radius: 4px;
     }
   }

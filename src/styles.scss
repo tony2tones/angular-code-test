@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Design tokens
+//
+// Override any variable here (or in a brand-specific stylesheet) to white-label
+// the application without touching component styles.
+//
+// Brand colours — the two values most likely to change per client:
+//   --primary-colour   dark/action colour (buttons, borders, headings)
+//   --secondary-colour light/surface colour (card backgrounds, button text)
+//
+// All other tokens are derived from or complement the brand pair.
+// ─────────────────────────────────────────────────────────────────────────────
+:root {
+  // ── Brand ──────────────────────────────────────────────────────────────────
+  --primary-colour:         #312f2f;
+  --secondary-colour:       #ffffff;
+
+  // ── Text ───────────────────────────────────────────────────────────────────
+  --colour-text:            #333333;
+  --colour-text-muted:      #555555;
+  --colour-text-on-primary: #ffffff;   // text placed on a --primary-colour bg
+
+  // ── Surfaces & borders ─────────────────────────────────────────────────────
+  --colour-border:          #e0e0e0;
+  --colour-divider:         #d0d0d0;   // 1px grid gap rendered as a line
+  --colour-surface:         #f7f7f7;   // subtle panel / list-item bg
+  --colour-surface-hover:   #f0f0f0;   // interactive surface on hover
+
+  // ── Feedback ───────────────────────────────────────────────────────────────
+  --colour-error:           #c0392b;
+
+  // ── Skeleton loader ────────────────────────────────────────────────────────
+  --colour-skeleton-base:   #efefef;
+  --colour-skeleton-shine:  #e0e0e0;
+
+  // ── Overlays ───────────────────────────────────────────────────────────────
+  --colour-shadow:          rgba(0, 0, 0, 0.35);
+  --colour-backdrop:        rgba(0, 0, 0, 0.55);
+}
