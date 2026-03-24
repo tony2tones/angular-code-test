@@ -19,7 +19,29 @@
     </ul>
   } @else if (vehicleService.error()) {
     <div class="vehicle-list__error" role="alert">
+      <svg
+        class="vehicle-list__state-icon vehicle-list__state-icon--error"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="13" />
+        <circle cx="12" cy="16.5" r="0.5" fill="currentColor" />
+      </svg>
       <p class="vehicle-list__error-message">{{ vehicleService.error() }}</p>
+      <app-button label="Try again" variant="secondary" (click)="retry()" />
+    </div>
+  } @else if (vehicleService.vehicles().length === 0) {
+    <div class="vehicle-list__empty">
+      <div class="vehicle-list__empty-icon">
+        <app-car-silhouette primaryColor="var(--colour-skeleton-shine)" secondaryColor="transparent" />
+      </div>
+      <p class="vehicle-list__empty-message">No vehicles are currently available. Please check back later.</p>
     </div>
   } @else {
     <ul class="vehicle-list__grid" aria-label="Vehicle list">
