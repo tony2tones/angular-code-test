@@ -1,7 +1,7 @@
-<section class="vehicle-list" aria-label="Vehicles">
+<section class="vehicle-list">
+  <h1 class="vehicle-list__heading">Our Vehicles</h1>
 
   @if (vehicleService.loading()) {
-
     <!-- Skeleton grid mirrors the real grid layout so there's no layout shift on load -->
     <ul class="vehicle-list__grid" aria-label="Loading vehicles" aria-busy="true">
       @for (_ of skeletonCount; track $index) {
@@ -17,27 +17,17 @@
         </li>
       }
     </ul>
-
   } @else if (vehicleService.error()) {
-
     <div class="vehicle-list__error" role="alert">
       <p class="vehicle-list__error-message">{{ vehicleService.error() }}</p>
     </div>
-
   } @else {
-
     <ul class="vehicle-list__grid" aria-label="Vehicle list">
       @for (vehicle of vehicleService.vehicles(); track vehicle.id; let i = $index) {
         <li class="vehicle-list__item">
-          <app-vehicle-card
-            [vehicle]="vehicle"
-            [index]="i"
-            [style.animation-delay]="i * 0.1 + 's'"
-          />
+          <app-vehicle-card [vehicle]="vehicle" [index]="i" [style.animation-delay]="i * 0.1 + 's'" />
         </li>
       }
     </ul>
-
   }
-
 </section>

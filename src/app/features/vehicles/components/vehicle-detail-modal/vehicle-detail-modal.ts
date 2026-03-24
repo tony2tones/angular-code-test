@@ -16,6 +16,7 @@ emissionsLabel = input();
 // viewChild give you a signal based reference to the <dialog> element
 private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
 
+
 open() {
   this.dialog().nativeElement.showModal();
 }

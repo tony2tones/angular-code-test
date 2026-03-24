@@ -1,22 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import {
-  EMPTY,
-  type Observable,
-  catchError,
-  forkJoin,
-  map,
-  of,
-  switchMap,
-} from 'rxjs';
+import { EMPTY, type Observable, catchError, forkJoin, map, of, switchMap } from 'rxjs';
 import {
   type AnyVehicle,
   type VehicleDetail,
   type VehicleSummary,
 } from '../interfaces/vehicle.interface';
 
-const API_BASE =
-  'https://frontend-code-test-api-1023992580432.europe-west2.run.app';
+const API_BASE = 'https://frontend-code-test-api-1023992580432.europe-west2.run.app';
 
 @Injectable({ providedIn: 'root' })
 export class VehicleService {
@@ -39,13 +30,11 @@ export class VehicleService {
       switchMap((summaries) =>
         forkJoin(
           summaries.map((summary) =>
-            this.http
-              .get<VehicleDetail>(`${API_BASE}${summary.apiUrl}`)
-              .pipe(
-                map((detail) => this.merge(summary, detail)),
-                // Per-vehicle errors emit null so forkJoin still completes.
-                catchError(() => of(null)),
-              ),
+            this.http.get<VehicleDetail>(`${API_BASE}${summary.apiUrl}`).pipe(
+              map((detail) => this.merge(summary, detail)),
+              // Per-vehicle errors emit null so forkJoin still completes.
+              catchError(() => of(null)),
+            ),
           ),
         ),
       ),
