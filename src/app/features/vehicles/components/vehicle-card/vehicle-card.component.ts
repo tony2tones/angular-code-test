@@ -1,15 +1,18 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, viewChild } from '@angular/core';
 import { AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
+import { VehicleDetailModal } from "../vehicle-detail-modal/vehicle-detail-modal";
 
 @Component({
   selector: 'app-vehicle-card',
-  imports: [],
+  imports: [VehicleDetailModal],
   templateUrl: './vehicle-card.component.html',
   styleUrl: './vehicle-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VehicleCardComponent {
   vehicle = input.required<AnyVehicle>();
+
+  readonly modal = viewChild.required<VehicleDetailModal>('modal');
 
   /**
    * Used by the parent list to stagger the fade-in animation via

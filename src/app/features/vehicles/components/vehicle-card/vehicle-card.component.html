@@ -13,4 +13,7 @@
     <p class="vehicle-card__price">From {{ vehicle().price }}</p>
     <p class="vehicle-card__description">{{ vehicle().description || 'test' }}</p>
   </div>
+  <button (click)="modal.open()">Show more</button>
 </article>
+
+<app-vehicle-detail-modal #modal [vehicle]="vehicle()" [emissionsLabel]="emissionsLabel" />
