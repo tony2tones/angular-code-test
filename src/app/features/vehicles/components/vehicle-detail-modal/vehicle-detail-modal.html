@@ -1,0 +1,15 @@
+<dialog #dialog class="vehicle-detail-modal" >
+    <div class="vehicle-detail-modal__content">
+        <button class="vehicle-detail-modal__close" (click)="close()" aria-label="Close details">
+            &times;
+        </button>
+        <h2 class="vehicle-detail-modal__title">{{ vehicle().name }}</h2>
+        <ul class="vehicle-detail-modal__list">
+             <li>Bodystyles: {{ vehicle().meta.bodystyles.join(', ') }}</li>
+        <li>Drivetrain: {{ vehicle().meta.drivetrain.join(', ') }}</li>
+        <li>Passengers: {{ vehicle().meta.passengers }}</li>
+        <li>Emissions: {{ emissionsLabel() }}</li>
+        </ul>
+    </div>
+
+</dialog>

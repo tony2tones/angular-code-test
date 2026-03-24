@@ -1,0 +1,27 @@
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &--primary {
+    background-color: #1a1a1a;
+    color: #fff;
+  }
+
+  &--secondary {
+    background-color: #fff;
+    color: #1a1a1a;
+    border: 1px solid #1a1a1a;
+  }
+}
