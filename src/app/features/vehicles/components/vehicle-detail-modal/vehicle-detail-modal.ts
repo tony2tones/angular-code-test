@@ -1,11 +1,12 @@
-import { Component, ElementRef, input, viewChild } from '@angular/core';
-import { AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
+import { ChangeDetectionStrategy, Component, type ElementRef, input, viewChild } from '@angular/core';
+import { type AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
 
 @Component({
   selector: 'app-vehicle-detail-modal',
   imports: [],
   templateUrl: './vehicle-detail-modal.html',
   styleUrl: './vehicle-detail-modal.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VehicleDetailModal {
 

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import {
   EMPTY,
-  Observable,
+  type Observable,
   catchError,
   forkJoin,
   map,
@@ -10,9 +10,9 @@ import {
   switchMap,
 } from 'rxjs';
 import {
-  AnyVehicle,
-  VehicleDetail,
-  VehicleSummary,
+  type AnyVehicle,
+  type VehicleDetail,
+  type VehicleSummary,
 } from '../interfaces/vehicle.interface';
 
 const API_BASE =
@@ -24,7 +24,7 @@ export class VehicleService {
   readonly error = signal<string | null>(null);
   readonly vehicles = signal<AnyVehicle[]>([]);
 
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   /**
    * Fetches the vehicle list then retrieves all detail records in parallel.

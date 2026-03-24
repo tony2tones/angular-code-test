@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VehicleDetailModal } from './vehicle-detail-modal';
-import { AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
+import { type AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
 
 const mockVehicle: AnyVehicle = {
   id: '1',

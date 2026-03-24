@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http/testing';
 
 import { VehicleService } from './vehicle.service';
-import { VehicleDetail, VehicleSummary } from '../interfaces/vehicle.interface';
+import { type VehicleDetail, type VehicleSummary } from '../interfaces/vehicle.interface';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Shared test fixtures
