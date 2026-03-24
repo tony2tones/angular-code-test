@@ -131,6 +131,16 @@ describe('VehicleService', () => {
       expect(service.loading()).toBe(false);
     });
 
+    it('resolves cleanly when the list endpoint returns an empty array', () => {
+      service.fetchAll().subscribe();
+
+      httpMock.expectOne(`${API_BASE}/api/vehicles/`).flush([]);
+
+      expect(service.loading()).toBe(false);
+      expect(service.vehicles()).toEqual([]);
+      expect(service.error()).toBeNull();
+    });
+
     it('clears any previous error on a fresh call', () => {
       // Simulate a stale error from a previous failed call.
       service.error.set('old error');
@@ -148,7 +158,19 @@ describe('VehicleService', () => {
   // ── fetchAll() — error paths ───────────────────────────────────────────────
 
   describe('fetchAll() — list request fails', () => {
-    it('sets the error signal with the response message', () => {
+    it('shows a network error message when status is 0 (offline / blocked)', () => {
+      service.fetchAll().subscribe();
+
+      httpMock
+        .expectOne(`${API_BASE}/api/vehicles/`)
+        .flush(null, { status: 0, statusText: 'Unknown Error' });
+
+      expect(service.error()).toBe(
+        'Unable to reach the server. Please check your connection and try again.',
+      );
+    });
+
+    it('shows a server error message when status is 500+', () => {
       service.fetchAll().subscribe();
 
       httpMock
@@ -158,7 +180,19 @@ describe('VehicleService', () => {
           statusText: 'Server Error',
         });
 
-      expect(service.error()).toBeTruthy();
+      expect(service.error()).toBe('A server error occurred. Please try again later.');
+    });
+
+    it('shows a not found message when status is 404', () => {
+      service.fetchAll().subscribe();
+
+      httpMock
+        .expectOne(`${API_BASE}/api/vehicles/`)
+        .flush('Not Found', { status: 404, statusText: 'Not Found' });
+
+      expect(service.error()).toBe(
+        'Vehicle data could not be found. Please try again later.',
+      );
     });
 
     it('sets loading to false after a list failure', () => {
@@ -168,6 +202,23 @@ describe('VehicleService', () => {
         .expectOne(`${API_BASE}/api/vehicles/`)
         .flush('Error', { status: 500, statusText: 'Server Error' });
 
+      expect(service.loading()).toBe(false);
+    });
+  });
+
+  describe('fetchAll() — all detail requests fail', () => {
+    it('sets an error when every detail request fails', () => {
+      service.fetchAll().subscribe();
+
+      httpMock.expectOne(`${API_BASE}/api/vehicles/`).flush([mockSummary]);
+      httpMock
+        .expectOne(`${API_BASE}/api/vehicles/xe`)
+        .flush(null, { status: 0, statusText: 'Unknown Error' });
+
+      expect(service.error()).toBe(
+        'Unable to load vehicle details. Please check your connection and try again.',
+      );
+      expect(service.vehicles()).toEqual([]);
       expect(service.loading()).toBe(false);
     });
   });

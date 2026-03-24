@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { EMPTY, type Observable, catchError, forkJoin, map, of, switchMap } from 'rxjs';
 import {
@@ -22,13 +22,15 @@ export class VehicleService {
    * Uses switchMap so any re-trigger cancels the previous in-flight request,
    * and forkJoin because HTTP calls are one-shot (complete after one emission).
    */
+  
   fetchAll(): Observable<AnyVehicle[]> {
     this.loading.set(true);
     this.error.set(null);
 
     return this.http.get<VehicleSummary[]>(`${API_BASE}/api/vehicles/`).pipe(
-      switchMap((summaries) =>
-        forkJoin(
+      switchMap((summaries) => {
+        if (summaries.length === 0) return of([]);
+        return forkJoin(
           summaries.map((summary) =>
             this.http.get<VehicleDetail>(`${API_BASE}${summary.apiUrl}`).pipe(
               map((detail) => this.merge(summary, detail)),
@@ -36,20 +38,38 @@ export class VehicleService {
               catchError(() => of(null)),
             ),
           ),
-        ),
-      ),
+        );
+      }),
       map((results) => {
         const vehicles = results.filter((v): v is AnyVehicle => v !== null);
+
+        if (results.length > 0 && vehicles.length === 0) {
+          // Every detail request failed — treat it the same as a full outage.
+          this.loading.set(false);
+          this.error.set('Unable to load vehicle details. Please check your connection and try again.');
+          return vehicles;
+        }
+
         this.vehicles.set(vehicles);
         this.loading.set(false);
         return vehicles;
       }),
-      catchError((err: Error) => {
+      catchError((err: unknown) => {
         this.loading.set(false);
-        this.error.set(err.message ?? 'Failed to load vehicles');
+        this.error.set(this.friendlyError(err));
         return EMPTY;
       }),
     );
+  }
+
+  private friendlyError(err: unknown): string {
+    if (err instanceof HttpErrorResponse) {
+      if (err.status === 0) return 'Unable to reach the server. Please check your connection and try again.';
+      if (err.status === 404) return 'Vehicle data could not be found. Please try again later.';
+      if (err.status >= 500) return 'A server error occurred. Please try again later.';
+      return `Request failed (${err.status}). Please try again.`;
+    }
+    return 'Something went wrong. Please try again.';
   }
 
   private merge(summary: VehicleSummary, detail: VehicleDetail): AnyVehicle {

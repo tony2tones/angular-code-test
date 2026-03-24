@@ -141,15 +141,51 @@
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Error state
+// Shared empty / error state layout
 // ─────────────────────────────────────────────────────────────────────────────
-.vehicle-list__error {
+%state-block {
   padding: 48px 24px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+// ── Error state ───────────────────────────────────────────────────────────────
+.vehicle-list__error {
+  @extend %state-block;
+}
+
+.vehicle-list__state-icon {
+  width: 56px;
+  height: 56px;
+
+  &--error {
+    color: var(--colour-error);
+  }
 }
 
 .vehicle-list__error-message {
   color: var(--colour-error);
   font-size: 1rem;
   margin: 0;
+}
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+.vehicle-list__empty {
+  @extend %state-block;
+}
+
+.vehicle-list__empty-icon {
+  width: 120px;
+  height: auto;
+  opacity: 0.35;
+}
+
+.vehicle-list__empty-message {
+  color: var(--colour-text-muted);
+  font-size: 1rem;
+  margin: 0;
+  max-width: 320px;
 }
