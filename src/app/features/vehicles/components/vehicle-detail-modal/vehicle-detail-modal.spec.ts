@@ -41,16 +41,16 @@ describe('VehicleDetailModal', () => {
 
   it('open() calls showModal() on the dialog element', () => {
     const dialog = fixture.nativeElement.querySelector('dialog') as HTMLDialogElement;
-    const spy = spyOn(dialog, 'showModal');
+    dialog.showModal = vi.fn();
     component.open();
-    expect(spy).toHaveBeenCalled();
+    expect(dialog.showModal).toHaveBeenCalled();
   });
 
   it('close() calls close() on the dialog element', () => {
     const dialog = fixture.nativeElement.querySelector('dialog') as HTMLDialogElement;
-    const spy = spyOn(dialog, 'close');
+    dialog.close = vi.fn();
     component.close();
-    expect(spy).toHaveBeenCalled();
+    expect(dialog.close).toHaveBeenCalled();
   });
 
   it('renders the vehicle name in an h2', () => {
@@ -69,9 +69,9 @@ describe('VehicleDetailModal', () => {
   it('clicking the close button calls close() on the dialog element', () => {
     fixture.detectChanges();
     const dialog = fixture.nativeElement.querySelector('dialog') as HTMLDialogElement;
-    const spy = spyOn(dialog, 'close');
+    dialog.close = vi.fn();
     const closeBtn = fixture.nativeElement.querySelector('.vehicle-detail-modal__close') as HTMLButtonElement;
     closeBtn.click();
-    expect(spy).toHaveBeenCalled();
+    expect(dialog.close).toHaveBeenCalled();
   });
 });
