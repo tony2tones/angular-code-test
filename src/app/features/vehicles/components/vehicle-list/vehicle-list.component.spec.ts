@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
 import { of } from 'rxjs';
 
 import { VehicleListComponent } from './vehicle-list.component';
 import { VehicleService } from '../../../../core/services/vehicle.service';
-import { AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
+import { type AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Fixture data

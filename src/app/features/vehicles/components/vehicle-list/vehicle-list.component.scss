@@ -18,6 +18,22 @@
   margin: 0 auto;
 }
 
+.vehicle-list__heading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 24px 16px 16px;
+  margin: 0;
+
+  @media (min-width: 768px) {
+    text-align: center;
+    padding: 40px 16px 24px;
+    font-size: 2rem;
+  }
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Responsive grid
 //
