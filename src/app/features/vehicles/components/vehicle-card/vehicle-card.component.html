@@ -13,15 +13,17 @@
     }
   </div>
 
-  <div class="vehicle-card__body">
-    <h2 class="vehicle-card__name">{{ vehicle().name }}</h2>
-    <p class="vehicle-card__price">From {{ vehicle().price || 'unlisted' }}</p>
-    <p class="vehicle-card__description">{{ vehicle().description }}</p>
-  </div>
+  <div class="vehicle-card__content">
+    <div class="vehicle-card__body">
+      <h2 class="vehicle-card__name">{{ vehicle().name }}</h2>
+      <p class="vehicle-card__price">From {{ vehicle().price || 'unlisted' }}</p>
+      <p class="vehicle-card__description">{{ vehicle().description }}</p>
+    </div>
 
-  <footer class="vehicle-card__footer">
-    <app-button label="Show more" (click)="modal.open()" />
-  </footer>
+    <footer class="vehicle-card__footer">
+      <app-button label="Show more" (click)="modal.open()" />
+    </footer>
+  </div>
 </article>
 
 <app-vehicle-detail-modal #modal [vehicle]="vehicle()" [emissionsLabel]="emissionsLabel" />

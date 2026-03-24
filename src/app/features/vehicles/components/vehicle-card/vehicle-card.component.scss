@@ -16,26 +16,20 @@
 
 .vehicle-card {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 16px;
-  border-bottom: 1px solid #e0e0e0;
-  background-color: #fff;
+  flex-direction: row; // mobile: image left, content right
+  align-items: stretch;
+  background-color: var(--secondary-colour);
+  border-bottom: 1px solid var(--colour-border);
   flex: 1;
 
-  // ── Tablet and above: flip to vertical stacked layout ──
+  // ── Tablet and above ──
   @media (min-width: 768px) {
     flex-direction: column;
-    align-items: stretch;
-    padding: 0;
     border-bottom: none;
   }
 
   // ─────────────────────────────────────────────
   // Image wrapper
-  // The same <img> src is used at every breakpoint.
-  // Changing aspect-ratio + object-fit: cover gives the
-  // illusion of a different crop without swapping src.
   // ─────────────────────────────────────────────
   &__image-wrapper {
     flex-shrink: 0;
@@ -45,7 +39,7 @@
 
     @media (min-width: 768px) {
       width: 100%;
-      aspect-ratio: 16 / 9; // tablet+: widescreen crop
+      aspect-ratio: 16 / 9;
     }
   }
 
@@ -57,31 +51,50 @@
   }
 
   // ─────────────────────────────────────────────
+  // Content wrapper — right-hand column on mobile,
+  // dissolves into normal flow on tablet+
+  // ─────────────────────────────────────────────
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    @media (min-width: 768px) {
+      display: contents;
+    }
+  }
+
+  // ─────────────────────────────────────────────
   // Text body
   // ─────────────────────────────────────────────
   &__body {
     flex: 1;
-    padding: 0 16px;
+    padding: 12px 16px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // vertically centre content within the body area on mobile
 
     @media (min-width: 768px) {
+      display: block;
       padding: 20px 16px 28px;
       text-align: center;
     }
   }
 
   &__name {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
     width: fit-content;
-    padding-block: 4px;
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    margin: 0 0 6px;
+    margin: 0 0 8px;
 
     @media (min-width: 768px) {
+      border-top: 1px solid var(--primary-colour);
+      border-bottom: 1px solid var(--primary-colour);
+      padding-block: 4px;
       font-size: 1.0625rem;
       margin-bottom: 14px;
       margin-inline: auto;
@@ -90,7 +103,7 @@
 
   &__price {
     font-size: 0.875rem;
-    color: #333;
+    color: var(--colour-text);
     margin: 0 0 6px;
 
     @media (min-width: 768px) {
@@ -100,18 +113,20 @@
 
   &__description {
     font-size: 0.875rem;
-    color: #555;
+    color: var(--colour-text-muted);
     line-height: 1.45;
     margin: 0;
   }
 
   &__footer {
-    margin-top: auto;
-    padding: 12px 16px;
-    text-align: center;
+    padding: 8px 16px 12px;
+    display: flex;
+    justify-content: flex-end; // button bottom-right on mobile
 
     @media (min-width: 768px) {
-      padding: 16px;
+      display: block;
+      margin-top: auto;
+      padding: 0;
     }
   }
 }
