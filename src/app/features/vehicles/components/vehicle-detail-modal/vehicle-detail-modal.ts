@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, type ElementRef, input, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type ElementRef,
+  input,
+  viewChild,
+} from '@angular/core';
 import { type AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
 
 @Component({
@@ -9,22 +15,17 @@ import { type AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VehicleDetailModal {
+  vehicle = input.required<AnyVehicle>();
+  emissionsLabel = input();
 
-vehicle = input.required<AnyVehicle>();
-emissionsLabel = input();
+  // viewChild give you a signal based reference to the <dialog> element
+  private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
 
-// viewChild give you a signal based reference to the <dialog> element
-private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
+  open() {
+    this.dialog().nativeElement.showModal();
+  }
 
-
-open() {
-  this.dialog().nativeElement.showModal();
-}
-
-close() {
-  this.dialog().nativeElement.close();
-}
-
-
-
+  close() {
+    this.dialog().nativeElement.close();
+  }
 }
