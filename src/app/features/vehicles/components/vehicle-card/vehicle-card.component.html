@@ -21,9 +21,16 @@
     </div>
 
     <footer class="vehicle-card__footer">
-      <app-button label="More about the {{ vehicle().name }}" (click)="modal.open()" />
+      <button 
+        (click)="modal.open()"
+        [attr.aria-expanded]="modal.isOpen()"
+        >Show more</button>
     </footer>
   </div>
 </article>
 
-<app-vehicle-detail-modal #modal [vehicle]="vehicle()" [emissionsLabel]="emissionsLabel" />
+<app-vehicle-detail-modal 
+  #modal 
+  [vehicle]="vehicle()" 
+  [emissionsLabel]="emissionsLabel" 
+  />

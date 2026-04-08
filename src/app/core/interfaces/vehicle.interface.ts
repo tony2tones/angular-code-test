@@ -15,6 +15,19 @@ export interface VehicleMeta {
   emissions: VehicleEmissions;
 }
 
+export type Vehicles = {
+  id: string,
+  name: string,
+  modelYear: string,
+  apiUrl: string,
+  media: Media[],
+}
+
+type Media = {
+  name: string,
+  url:string,
+}
+
 /** Shape returned by GET /api/vehicles/ */
 export interface VehicleSummary {
   id: string;

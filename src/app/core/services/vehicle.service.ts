@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { EMPTY, type Observable, catchError, forkJoin, map, of, switchMap } from 'rxjs';
+import { EMPTY, type Observable, catchError, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import {
   type AnyVehicle,
   type VehicleDetail,
@@ -9,11 +9,25 @@ import {
 
 const API_BASE = 'https://frontend-code-test-api-1023992580432.europe-west2.run.app';
 
+export type Vehicles = {
+  id: string,
+  name: string,
+  modelYear: string,
+  apiUrl: string,
+  media: Media[],
+}
+
+type Media = {
+  name: string,
+  url:string,
+}
+
 @Injectable({ providedIn: 'root' })
 export class VehicleService {
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly vehicles = signal<AnyVehicle[]>([]);
+  readonly vehicleData = signal<Vehicles[]>([]);
 
   private readonly http = inject(HttpClient);
 
@@ -32,7 +46,7 @@ export class VehicleService {
         if (summaries.length === 0) return of([]);
         return forkJoin(
           summaries.map((summary) =>
-            this.http.get<VehicleDetail>(`${API_BASE}${summary.apiUrl}`).pipe(
+            this.http.get<VehicleDetail>(`${API_BASE}/api/vehicles/${summary.id}`).pipe(
               map((detail) => this.merge(summary, detail)),
               // Per-vehicle errors emit null so forkJoin still completes.
               catchError(() => of(null)),

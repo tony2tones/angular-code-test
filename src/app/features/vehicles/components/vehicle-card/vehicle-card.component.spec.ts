@@ -1,7 +1,9 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VehicleCardComponent } from './vehicle-card.component';
 import { type AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
+import { VehicleDetailModal } from '../vehicle-detail-modal/vehicle-detail-modal';
+import { By } from '@angular/platform-browser';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Fixture data
@@ -123,5 +125,18 @@ describe('VehicleCardComponent', () => {
       const img = el.querySelector<HTMLImageElement>('.vehicle-card__image');
       expect(img?.alt).toBe('XE');
     });
+
+    it('it should asset that the attr.aria-expanded is either open or closed', () => {
+      const button = el.querySelector<HTMLButtonElement>('button');
+
+      const dialog = el.querySelector('dialog') as HTMLDialogElement;
+      dialog.showModal = vi.fn();
+
+
+      expect(button?.getAttribute('aria-expanded')).toBe('false');
+      button?.click();
+      fixture.detectChanges();
+      expect(button?.getAttribute('aria-expanded')).toBe('true');
+    })
   });
 });

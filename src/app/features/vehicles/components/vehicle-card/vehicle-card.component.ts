@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
-import { type AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
 import { VehicleDetailModal } from '../vehicle-detail-modal/vehicle-detail-modal';
-import { ButtonComponent } from '../../../../shared/ui/button/button.component';
 import { CarSilhouetteComponent } from '../../../../shared/ui/svg/car-silhouette/car-silhouette.component';
+import { AnyVehicle } from '../../../../core/interfaces/vehicle.interface';
 
 @Component({
   selector: 'app-vehicle-card',
-  imports: [VehicleDetailModal, ButtonComponent, CarSilhouetteComponent],
+  imports: [VehicleDetailModal, CarSilhouetteComponent],
   templateUrl: './vehicle-card.component.html',
   styleUrl: './vehicle-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
